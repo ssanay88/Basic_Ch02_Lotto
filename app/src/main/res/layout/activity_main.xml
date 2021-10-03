@@ -50,6 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/blue_circle"
+            android:gravity="center"
             android:text="1"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -61,6 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/blue_circle"
+            android:gravity="center"
             android:text="1"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -72,6 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/blue_circle"
+            android:gravity="center"
             android:text="1"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -83,6 +89,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/blue_circle"
+            android:gravity="center"
             android:text="1"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -94,6 +102,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/blue_circle"
+            android:gravity="center"
             android:text="1"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -105,6 +115,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@drawable/blue_circle"
+            android:gravity="center"
             android:text="1"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -140,6 +152,7 @@
     android:visivility : UI에서 사용자에게 보여줄지를 선택
     tools:visivility : xml 디자인 화면에서만 보여주도록 설정
 
+    res-drawble 파일에 원하는 형태의 파일을 만들고 난 뒤 background로 설정정
 
 
 

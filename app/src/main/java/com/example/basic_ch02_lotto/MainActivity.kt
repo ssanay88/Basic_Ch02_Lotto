@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.basic_ch02_lotto.databinding.ActivityMainBinding
 
@@ -41,13 +42,25 @@ class MainActivity : AppCompatActivity() {
 
         initRunBtn()
         initAddBtn()
+        initClearBtn()
 
     }
 
     // 자동 생성 버튼
     private fun initRunBtn() {
         mainbinding.runBtn.setOnClickListener {
-            val list = getRandomNumber()
+            val list = getRandomNumber()    // 랜덤으로 6자리 수를 불러온 리스트
+
+            // 번호 생성 완료됐음을 설정
+            didRun = true
+
+            // 생성된 리스트 원소에 인덱스로 각각 접근하도록 함수 생성
+            list.forEachIndexed { index, num ->
+                val textView = numberTextViewList[index]    // 텍스트뷰를 원소로 가지는 리스트에 인덱스로 접근
+                textView.text = num.toString()    // 각각 원소의 text를 list에서 해당 수로 변경
+                textView.isVisible = true    // 보여주기 on
+                setNumBackground(num,textView)
+            }
 
             Log.d("MainActivity", list.toString())
         }
@@ -59,13 +72,19 @@ class MainActivity : AppCompatActivity() {
         val numberList = mutableListOf<Int>()
             .apply {
                 for (i in 1..45) {
+                    // 이미 선택된 번호는 제외하고 추가
+                    if (pickNumberSet.contains(i)) {
+                        continue
+                    }
+
                     this.add(i)
                 }
             }
 
         numberList.shuffle()
 
-        val newList = numberList.subList(0,6)
+        // 사용자가 선택한 번호들이 담긴 리스트와 랜덤으로 추출한 수들을 합쳐준다
+        val newList = pickNumberSet.toList() + numberList.subList(0,6 - pickNumberSet.size)
 
         return newList.sorted()
 
@@ -98,8 +117,34 @@ class MainActivity : AppCompatActivity() {
             textView.isVisible = true    // 가시 상태를 true로 변경
             textView.text = mainbinding.numberPicker.value.toString()    // 해당 텍스트 뷰를 선택한 수로 변경
 
+            setNumBackground(mainbinding.numberPicker.value,textView)    // numberPicker에서 고른 수의 범위에 따른 배경색 지정 함수
+
+
             pickNumberSet.add(mainbinding.numberPicker.value)    // 선택된 번호를 담는 리스트에 추가
 
+        }
+    }
+
+    private fun initClearBtn() {
+        mainbinding.clearBtn.setOnClickListener {
+            pickNumberSet.clear()
+            numberTextViewList.forEach {
+                it.isVisible = false    // 각각 요소들의 가시성을 false로 설정하여 없애준다
+            }
+
+            didRun = false
+        }
+    }
+
+    // 번호 범위에 따른 다른 배경색 지정 함수
+    private fun setNumBackground(number:Int, textView: TextView) {
+
+        when(number) {
+            in 1..10 -> textView.background = ContextCompat.getDrawable(this,R.drawable.yellow_circle)
+            in 11..20 -> textView.background = ContextCompat.getDrawable(this,R.drawable.blue_circle)
+            in 21..30 -> textView.background = ContextCompat.getDrawable(this,R.drawable.red_circle)
+            in 31..40 -> textView.background = ContextCompat.getDrawable(this,R.drawable.gray_circle)
+            else -> textView.background = ContextCompat.getDrawable(this,R.drawable.green_circle)
         }
     }
 
