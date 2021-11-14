@@ -15,11 +15,14 @@ class MainActivity : AppCompatActivity() {
 
     private var didRun = false    // 번호가 생성되었는지 판단
 
+    // hashSetOf : 중복되는 값을 허용하지 않는 리스트
+    // 선택된 번호를 담을 리스트
     private val pickNumberSet = hashSetOf<Int>()    // 중복되는 번호가 추가되지 않도록 막아준다
 
-    // 뽑은 번호 6개를 담을 리스트
+    // 번호가 적힌 View들을 담은 리스트
     private val numberTextViewList: List<TextView> by lazy {
 
+        // TextView 6개를 담은 리스트 생성
         listOf(
             mainbinding.number1,
             mainbinding.number2,
@@ -37,12 +40,13 @@ class MainActivity : AppCompatActivity() {
         mainbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainbinding.root)
 
+        // NumberPicker의 최소 수와 최대 수 설정
         mainbinding.numberPicker.minValue = 1
         mainbinding.numberPicker.maxValue = 45
 
-        initRunBtn()
-        initAddBtn()
-        initClearBtn()
+        initRunBtn()    // 번호 자동 생성 버튼 클릭
+        initAddBtn()    // NumberPicker로 선택한 번호 추가 버튼 클릭
+        initClearBtn()    // 번호 리셋 버튼 클릭
 
     }
 
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 val textView = numberTextViewList[index]    // 텍스트뷰를 원소로 가지는 리스트에 인덱스로 접근
                 textView.text = num.toString()    // 각각 원소의 text를 list에서 해당 수로 변경
                 textView.isVisible = true    // 보여주기 on
-                setNumBackground(num,textView)
+                setNumBackground(num,textView)    // 번호의 범위에 따라 배경색 다르게 지정
             }
 
             Log.d("MainActivity", list.toString())
@@ -72,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         val numberList = mutableListOf<Int>()
             .apply {
                 for (i in 1..45) {
-                    // 이미 선택된 번호는 제외하고 추가
+                    // 이미 선택된 번호는 제외하고 추가 numberList에 추가
                     if (pickNumberSet.contains(i)) {
                         continue
                     }
@@ -81,11 +85,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+        // 1부터 45까지 들어있는 리스트를 셔플
         numberList.shuffle()
 
         // 사용자가 선택한 번호들이 담긴 리스트와 랜덤으로 추출한 수들을 합쳐준다
+        // 랜덤으로 뽑히는 수는 선택된 수들만큼 빼고 가져온다
         val newList = pickNumberSet.toList() + numberList.subList(0,6 - pickNumberSet.size)
 
+        // 오름차순으로 정렬 후 반환
         return newList.sorted()
 
     }
@@ -95,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         mainbinding.addBtn.setOnClickListener {
 
             // 모든 번호가 나와있는 경우 조건 확인
+            // didRun == True : 이미 번호가 선택되어서 화면에 표시된 상태
             if (didRun) {
                 Toast.makeText(this, "초기화 후에 시도해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener    // 리턴 시 setOnClickListener만 리턴
@@ -102,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 
             // 6개 초과로 번호를 추가하려는 경우 조건 확인
             if (pickNumberSet.size >= 6) {
-                Toast.makeText(this, "번호는 5개까지만 선택할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "번호는 6개까지만 선택할 수 있습니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -115,6 +123,7 @@ class MainActivity : AppCompatActivity() {
             // 들어가야할 텍스트 뷰의 자리를 구해준다
             val textView = numberTextViewList[pickNumberSet.size]
             textView.isVisible = true    // 가시 상태를 true로 변경
+            // numberPicker에 선택된 수를 text로 설정한다.
             textView.text = mainbinding.numberPicker.value.toString()    // 해당 텍스트 뷰를 선택한 수로 변경
 
             setNumBackground(mainbinding.numberPicker.value,textView)    // numberPicker에서 고른 수의 범위에 따른 배경색 지정 함수
@@ -132,7 +141,7 @@ class MainActivity : AppCompatActivity() {
                 it.isVisible = false    // 각각 요소들의 가시성을 false로 설정하여 없애준다
             }
 
-            didRun = false
+            didRun = false    // 선택된 수가 없는 상태로 변경
         }
     }
 

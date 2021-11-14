@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+NumberPicker : 숫자를 고를 수 있도록 해주는 뷰
+
+constraintHorizontal_chainStyle : 제약이 걸린 두 컴포넌트의 체인에 대한 속성
+ - packed : 뭉쳐서 정렬
+ - spread : 일정한 간격으로 정렬 (기본값)
+ - spreadside : 양쪽 뷰들은 제약의 가장 끝에 붙히고 가운데 뷰들은 일정한 거리로 정렬
+기본적으로 제일 왼쪽 , 제일 위 뷰들이 리더가 된다.
+
+android:visivility : UI에서 사용자에게 보여줄지를 선택
+tools:visivility : xml 디자인 화면에서만 보여주도록 설정
+
+res/drawble 파일에 원하는 형태의 파일을 만들고 난 뒤 background로 설정
+
+-->
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -144,15 +161,7 @@
 
     <!--
 
-    constraintHorizontal_chainStyle : 제약이 걸린 두 컴포넌트의 체인에 대한 속성
-    - packed : 붙이는 속성
-    - spread : 떨어트리는 속성
-    - spread_inside : 더 안쪽으로 떨어트린다.
 
-    android:visivility : UI에서 사용자에게 보여줄지를 선택
-    tools:visivility : xml 디자인 화면에서만 보여주도록 설정
-
-    res-drawble 파일에 원하는 형태의 파일을 만들고 난 뒤 background로 설정정
 
 
 
